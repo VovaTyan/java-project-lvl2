@@ -6,10 +6,13 @@ import static formatters.Stylish.stylish;
 
 public class Formatter {
     public static String[] formatter(String format, String diff) {
-        return switch (format) {
-            case "plain" -> plain(diff);
-            case "json" -> json(diff);
-            default -> stylish(diff);
-        };
+        if (format.equals("plain")) {
+            return plain(diff);
+        } else if (format.equals("json")) {
+            return json(diff);
+        } else {
+            return stylish(diff);
+        }
+
     }
 }
