@@ -11,29 +11,30 @@ public class Plain {
     public static String[] plain(String dif) {
         String[] result = new String[INDEX_6];
         switch (dif) {
-            case "added" -> {
+            case "added":
                 result[INDEX_0] = "Property '";
                 result[INDEX_1] = "' was added with value: ";
                 result[INDEX_2] = "\n";
-            }
-            case "deleted" -> {
+                break;
+            case "deleted":
                 result[INDEX_0] = "Property '";
                 result[INDEX_1] = "' was removed\n";
-            }
-            case "changed" -> {
+                break;
+            case "changed":
                 result[INDEX_0] = "Property '";
                 result[INDEX_1] = "' was updated. From ";
                 result[INDEX_2] = "";
                 result[INDEX_3] = " to ";
                 result[INDEX_4] = "";
                 result[INDEX_5] = "\n";
-            }
-            case "unchanged" -> {
+                break;
+            case "unchanged":
                 result[INDEX_0] = "Property '";
                 result[INDEX_1] = "' was unchanged with value: ";
                 result[INDEX_2] = "\n";
-            }
-            default -> throw new RuntimeException();
+                break;
+            default:
+                throw new RuntimeException();
         }
         return result;
     }
