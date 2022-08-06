@@ -21,21 +21,7 @@ class Gendiff implements Callable<Integer> {
 
     @Override
     public Integer call() throws IOException {
-        String diff = "";
-        switch (format) {
-            case "stylish":
-                diff = Differ.generate(filepath1, filepath2);
-                break;
-            case "plain":
-                diff = "";
-                break;
-            case "json":
-                diff = " ";
-                break;
-            default:
-                diff = "Неверный формат";
-        }
-
+        String diff = Differ.generate(filepath1, filepath2, format);
         System.out.println(diff);
         return 0;
     }
