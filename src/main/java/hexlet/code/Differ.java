@@ -37,7 +37,6 @@ public class Differ {
         for (String key: keys) {
             String oneString = oneMap.get(key) == null ? "null" : oneMap.get(key).toString();
             String twoString = twoMap.get(key) == null ? "null" : twoMap.get(key).toString();
-
             if (!oneMap.containsKey(key)) {
                 state = "added";
             } else if (!twoMap.containsKey(key)) {
@@ -50,12 +49,28 @@ public class Differ {
                 }
             }
             if (format.equals("plain")) {
-                oneString = ((oneMap.get(key) instanceof String)
-                        || (oneMap.get(key) instanceof Integer)
-                        || (oneMap.get(key) instanceof Boolean)) ? oneMap.get(key).toString() : "[complex value]";
-                twoString = ((twoMap.get(key) instanceof String)
-                        || (twoMap.get(key) instanceof Integer)
-                        || (twoMap.get(key) instanceof Boolean)) ? twoMap.get(key).toString() : "[complex value]";
+                if (!Utils.isComplexValue(oneMap.get(key))) {
+                    oneString = "[complex value]";
+                }
+                if (!Utils.isComplexValue(twoMap.get(key))) {
+                    twoString = "[complex value]";
+                }
+            }
+            if (format.equals("plain")) {
+                if (oneMap.get(key) instanceof String) {
+                    oneString = Utils.frame(oneString, "'");
+                }
+                if (twoMap.get(key) instanceof String) {
+                    twoString = Utils.frame(twoString, "'");
+                }
+            }
+            if (format.equals("json")) {
+                if (oneMap.get(key) instanceof String) {
+                    oneString = Utils.frame(oneString, "\"");
+                }
+                if (twoMap.get(key) instanceof String) {
+                    twoString = Utils.frame(twoString, "\"");
+                }
             }
             forms = formatter(format, state);
             if (state.equals("added")) {
@@ -77,10 +92,10 @@ public class Differ {
                 }
                 result.append(twoString).append(forms[INDEX_5]);
             }
-            if (state.equals("unchanged")) {
+            if (state.equals("unchanged") && !format.equals("plain")) {
                 result.append(forms[INDEX_0]).append(key).append(forms[INDEX_1]).append(oneString);
                 if (format.equals("json")) {
-                    result.append(",").append(oneString);
+                    result.append(", ").append(twoString);
                 }
                 result.append(forms[INDEX_2]);
             }
@@ -89,6 +104,7 @@ public class Differ {
             result.append("}");
         }
         if (format.equals("json")) {
+            result.deleteCharAt(result.lastIndexOf(","));
             result.append("]");
         }
         return result.toString();

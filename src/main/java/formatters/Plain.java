@@ -30,7 +30,7 @@ public class Plain {
                 break;
             case "unchanged":
                 result[INDEX_0] = "Property '";
-                result[INDEX_1] = "' was unchanged with value: ";
+                result[INDEX_1] = "' was not update: ";
                 result[INDEX_2] = "\n";
                 break;
             default:
