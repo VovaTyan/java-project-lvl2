@@ -23,7 +23,7 @@ jobs:
   test:
     strategy:
       matrix:
-        platform: [ ubuntu-latest ]
+        platform: [ ubuntu ]
     name: test/node ${{ matrix.node }}/${{ matrix.platform }}
     runs-on: ${{ matrix.platform }}
     steps:
