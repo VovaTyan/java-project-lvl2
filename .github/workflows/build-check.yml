@@ -16,37 +16,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-
-      - name: build
-        run: make build
-  test:
-    strategy:
-      matrix:
-        platform: [ ubuntu ]
-    name: test/node ${{ matrix.node }}/${{ matrix.platform }}
-    runs-on: ${{ matrix.platform }}
-    steps:
-      - uses: actions/checkout@master
-      - uses: actions/setup-node@master
+      - uses: actions/checkout@v2
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
         with:
-          node-version: ${{ matrix.node }}
-      - run: npm install -g yarn
-      - run: yarn install
-      - run: yarn build
-      - run: yarn test
-  coverage:
-    needs: [ test ]
-    name: coverage
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
-      - uses: actions/setup-node@master
-      - run: npm install -g yarn
-      - run: yarn install
-      - run: yarn build
-      - uses: VovaTyan/codeclimate-action@v2.2.4
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Build with Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: build
+      - name: Publish code coverage
+        uses: VovaTyan/codeclimate-action@v3.0.0
         env:
-          CC_TEST_REPORTER_ID: fc62717be9d89e453a1a46dc9839e93015c3c2287cdd5d1e712b9381b6f6a37a
+          CC_TEST_REPORTER_ID: ${{secrets.fc62717be9d89e453a1a46dc9839e93015c3c2287cdd5d1e712b9381b6f6a37a}}
+          JACOCO_SOURCE_PATH: src/main/java
         with:
-          coverageCommand: yarn coverage
+          coverageCommand: make report
+          coverageLocations: ${{github.workspace}}/build/reports/jacoco/test/jacocoTestReport.xml:jacoco
