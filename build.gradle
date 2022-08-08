@@ -2,9 +2,15 @@ plugins {
     id 'java'
     id 'application'
     id 'checkstyle'
+    id 'jacoco'
 }
 application {
     mainClass = 'hexlet.code.App'
+}
+
+jacoco {
+    toolVersion = "0.8.8"
+    reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
 }
 
 group 'hexlet.code'
@@ -13,6 +19,7 @@ version '1.0-SNAPSHOT'
 repositories {
     mavenCentral()
 }
+
 checkstyle {
     toolVersion '8.41'
 }
@@ -31,13 +38,21 @@ dependencies {
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.13.3'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.13.3'
     implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: '2.13.3'
-
     testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.23.1'
 
 }
 
 test {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    reports {
+        xml.required = true
+        csv.required = false
+        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+    }
 }
 
 compileJava {
