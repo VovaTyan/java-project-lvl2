@@ -21,9 +21,6 @@ jobs:
       - name: build
         run: make build
   test:
-    strategy:
-      matrix:
-        platform: [ ubuntu-latest, macOS-latest ]
     name: test/node ${{ matrix.node }}/${{ matrix.platform }}
     runs-on: ${{ matrix.platform }}
     steps:
