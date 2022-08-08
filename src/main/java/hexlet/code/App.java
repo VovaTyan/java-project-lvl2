@@ -12,7 +12,7 @@ import java.util.concurrent.Callable;
 class Gendiff implements Callable<Integer> {
 
     @CommandLine.Option(names = {"-f", "--format"}, description = "output format [default: stylish]")
-        private final String format = "stylish";
+        private String format = "stylish";
     @CommandLine.Parameters(index = "0", description = "path to first file")
         private Path filepath1;
     @CommandLine.Parameters(index = "1", description = "path to second file")
