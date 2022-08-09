@@ -14,7 +14,7 @@ install:
 	./gradlew clean install
 
 run:
-	./gradlew run
+	./gradlew run --args='file1.json file2.json'
 
 test:
 	./gradlew test
