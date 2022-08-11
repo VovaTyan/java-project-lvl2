@@ -27,22 +27,15 @@ jobs:
         with:
           arguments: build
   coverage:
-    needs: [ test ]
     name: coverage
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - uses: actions/setup-node@master
-        with:
-          node-version: '12'
-      - run: npm install -g yarn
-      - run: yarn install
-      - run: yarn build
       - uses: paambaati/codeclimate-action@v3.0.0
         env:
           CC_TEST_REPORTER_ID: fc62717be9d89e453a1a46dc9839e93015c3c2287cdd5d1e712b9381b6f6a37a
           JACOCO_SOURCE_PATH: src/main/java
         with:
           coverageLocations: ${{github.workspace}}/build/jacocoHtml/index.html
-          coverageCommand: yarn run coverage
+          coverageCommand: make report
           debug: true
