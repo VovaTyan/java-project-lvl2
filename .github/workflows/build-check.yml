@@ -26,11 +26,7 @@ jobs:
         uses: gradle/gradle-build-action@v2
         with:
           arguments: build
-  coverage:
-    name: coverage
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
+      - name: coverage
       - uses: paambaati/codeclimate-action@v3.0.0
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
@@ -38,4 +34,4 @@ jobs:
         with:
           coverageCommand: make report
           coverageLocations: ${{github.workspace}}/build/jacocoHtml/index.html:jacoco
-
+          debug: true
