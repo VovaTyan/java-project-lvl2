@@ -8,11 +8,6 @@ application {
     mainClass = 'hexlet.code.App'
 }
 
-jacoco {
-    toolVersion = "0.8.8"
-    reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
-}
-
 group 'hexlet.code'
 version '1.0-SNAPSHOT'
 
