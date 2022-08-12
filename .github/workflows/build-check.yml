@@ -33,9 +33,9 @@ jobs:
       - uses: actions/checkout@master
       - uses: paambaati/codeclimate-action@v3.0.0
         env:
-          CC_TEST_REPORTER_ID: fc62717be9d89e453a1a46dc9839e93015c3c2287cdd5d1e712b9381b6f6a37a
+          CC_TEST_REPORTER_ID: {{secret.CC_TEST_REPORTER_ID}}
           JACOCO_SOURCE_PATH: src/main/java
         with:
-          coverageLocations: ${{github.workspace}}/build/jacocoHtml/index.html
+          coverageLocations: ${{github.workspace}}/build/jacocoHtml/index.html:jacoco
           coverageCommand: make report
           debug: true
