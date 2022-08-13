@@ -17,6 +17,9 @@ public class Differ {
     private static final byte INDEX_4 = 4;
     private static final byte INDEX_5 = 5;
 
+    public static String generate(String filepath1, String filepath2) throws IOException {
+        return generate(filepath1, filepath2, "stylish");
+    }
     public static String generate(String filepath1, String filepath2, String format) throws IOException {
         Map<String, Object> oneMap = parser(Paths.get(filepath1));
         Map<String, Object> twoMap = parser(Paths.get(filepath2));
