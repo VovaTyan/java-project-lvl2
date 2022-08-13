@@ -14,9 +14,9 @@ class Gendiff implements Callable<Integer> {
     @CommandLine.Option(names = {"-f", "--format"}, description = "output format [default: stylish]")
         private String format = "stylish";
     @CommandLine.Parameters(index = "0", description = "path to first file")
-        private Path filepath1 = Path.of("/home/vova/java-project-lvl2/filepath1");
+        private Path filepath1;
     @CommandLine.Parameters(index = "1", description = "path to second file")
-        private Path filepath2 = Path.of("/home/vova/java-project-lvl2/filepath2");
+        private Path filepath2;
 
     @Override
     public Integer call() throws Exception {
