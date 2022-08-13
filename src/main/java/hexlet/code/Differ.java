@@ -110,6 +110,9 @@ public class Differ {
             result.deleteCharAt(result.lastIndexOf(","));
             result.append("]");
         }
+        if (format.equals("plain")) {
+            result.deleteCharAt(result.lastIndexOf("\n"));
+        }
         return result.toString();
     }
 }
