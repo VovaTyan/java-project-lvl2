@@ -3,15 +3,14 @@ package hexlet.code;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.nio.file.Path;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class DifferTest {
     @Test
     public void testGenerateJson() throws IOException {
-        Path path1 = Path.of("./src/test/resources/file1.json");
-        Path path2 = Path.of("./src/test/resources/file2.json");
+        String path1 = "./src/test/resources/file1.json";
+        String path2 = "./src/test/resources/file2.json";
         var actual1 = Differ.generate(path1, path2, "stylish");
         var expected1 = "{\n  - follow: false\n    host: hexlet.io\n  - proxy: 123.234.53.22\n"
                 + "  - timeout: 50\n  + timeout: 20\n  + verbose: true\n}";
@@ -20,8 +19,8 @@ class DifferTest {
 
     @Test
     public void testGenerateYaml() throws IOException {
-        Path path1 = Path.of("./src/test/resources/file1.yml");
-        Path path2 = Path.of("./src/test/resources/file2.yml");
+        String path1 = "./src/test/resources/file1.yml";
+        String path2 = "./src/test/resources/file2.yml";
         var actual1 = Differ.generate(path1, path2, "stylish");
         var expected1 = "{\n  - follow: false\n    host: hexlet.io\n  - proxy: 123.234.53.22\n"
                 + "  - timeout: 50\n  + timeout: 20\n  + verbose: true\n}";
@@ -30,8 +29,8 @@ class DifferTest {
 
     @Test
     public void testGeneratePlain() throws IOException {
-        Path path1 = Path.of("./src/test/resources/file1.json");
-        Path path2 = Path.of("./src/test/resources/file2.json");
+        String path1 = "./src/test/resources/file1.json";
+        String path2 = "./src/test/resources/file2.json";
         var actual1 = Differ.generate(path1, path2, "plain");
         var expected1 = "Property 'follow' was removed\n"
                 + "Property 'proxy' was removed\n"
@@ -42,8 +41,8 @@ class DifferTest {
 
     @Test
     public void testGenerateStructureStylish() throws IOException {
-        Path path1 = Path.of("./src/test/resources/file3.json");
-        Path path2 = Path.of("./src/test/resources/file4.json");
+        String path1 = "./src/test/resources/file3.json";
+        String path2 = "./src/test/resources/file4.json";
         var actual1 = Differ.generate(path1, path2, "stylish");
         var expected1 = "{\n    chars1: [a, b, c]\n"
                 + "  - chars2: [d, e, f]\n"
@@ -73,8 +72,8 @@ class DifferTest {
 
     @Test
     public void testGenerateStructurePlain() throws IOException {
-        Path path1 = Path.of("./src/test/resources/file3.json");
-        Path path2 = Path.of("./src/test/resources/file4.json");
+        String path1 = "./src/test/resources/file3.json";
+        String path2 = "./src/test/resources/file4.json";
         var actual1 = Differ.generate(path1, path2, "plain");
         var expected1 = "Property 'chars2' was updated. From [complex value] to false\n"
             + "Property 'checked' was updated. From false to true\n"
@@ -93,8 +92,8 @@ class DifferTest {
     }
     @Test
     public void testGenerateOutJson() throws IOException {
-        Path path1 = Path.of("./src/test/resources/file1.json");
-        Path path2 = Path.of("./src/test/resources/file2.json");
+        String path1 = "./src/test/resources/file1.json";
+        String path2 = "./src/test/resources/file2.json";
         var actual1 = Differ.generate(path1, path2, "json");
         var expected1 = "[\n"
                 + "  {\"name\": \"follow\", \"valuesPair\": [false, null]},\n"

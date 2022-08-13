@@ -1,7 +1,7 @@
 package hexlet.code;
 
 import java.io.IOException;
-import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.TreeSet;
 
@@ -17,9 +17,9 @@ public class Differ {
     private static final byte INDEX_4 = 4;
     private static final byte INDEX_5 = 5;
 
-    public static String generate(Path filepath1, Path filepath2, String format) throws IOException {
-        Map<String, Object> oneMap = parser(filepath1);
-        Map<String, Object> twoMap = parser(filepath2);
+    public static String generate(String filepath1, String filepath2, String format) throws IOException {
+        Map<String, Object> oneMap = parser(Paths.get(filepath1));
+        Map<String, Object> twoMap = parser(Paths.get(filepath2));
 
         StringBuilder result = new StringBuilder();
         TreeSet<String> keys = new TreeSet<>();
