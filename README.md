@@ -6,6 +6,8 @@
 
 Compares two configuration files and shows a difference.
 
+[Презентация в Asciinema](https://asciinema.org/connect/2fc3fb6e-9956-459e-b28f-e0c2244cbe78)
+
 ## Start
 
 ```sh
