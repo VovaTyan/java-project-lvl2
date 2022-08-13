@@ -25,7 +25,7 @@ class Gendiff implements Callable<Integer> {
         return 0;
     }
 }
-public class app {
+public class App {
     public static void main(String... args) {
         int exitCode = new CommandLine(new Gendiff()).execute(args);
         System.exit(exitCode);
