@@ -5,7 +5,7 @@ plugins {
     id 'jacoco'
 }
 application {
-    mainClass = 'hexlet.code.App'
+    mainClass = 'hexlet.code.app'
 }
 
 group 'hexlet.code'
