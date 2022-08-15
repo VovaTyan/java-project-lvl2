@@ -10,12 +10,6 @@ import static hexlet.code.Parser.parser;
 
 
 public class Differ {
-    private static final byte INDEX_0 = 0;
-    private static final byte INDEX_1 = 1;
-    private static final byte INDEX_2 = 2;
-    private static final byte INDEX_3 = 3;
-    private static final byte INDEX_4 = 4;
-    private static final byte INDEX_5 = 5;
 
     public static String generate(String filepath1, String filepath2) throws IOException {
         return generate(filepath1, filepath2, "stylish");

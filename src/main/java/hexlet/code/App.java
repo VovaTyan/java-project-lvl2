@@ -12,9 +12,11 @@ class Gendiff implements Callable<Integer> {
 
     @CommandLine.Option(names = {"-f", "--format"}, description = "output format [default: stylish]")
         private String format = "stylish";
-    @CommandLine.Parameters(index = "0", description = "path to first file", defaultValue = "file1.json")
+    @CommandLine.Parameters(index = "0", description = "path to first file",
+            defaultValue = "./src/test/resources/file1.json")
         private String filepath1;
-    @CommandLine.Parameters(index = "1", description = "path to second file", defaultValue = "file2.json")
+    @CommandLine.Parameters(index = "1", description = "path to second file",
+            defaultValue = "./src/test/resources/file2.json")
         private String filepath2;
 
     @Override
