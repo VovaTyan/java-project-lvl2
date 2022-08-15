@@ -3,9 +3,9 @@ package hexlet.code;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.Map;
-import java.util.TreeSet;
 
 import static hexlet.code.Formatter.formatter;
+import static hexlet.code.InterConstruchion.getInterConstruchion;
 import static hexlet.code.Parser.parser;
 
 
@@ -23,96 +23,7 @@ public class Differ {
     public static String generate(String filepath1, String filepath2, String format) throws IOException {
         Map<String, Object> oneMap = parser(Paths.get(filepath1));
         Map<String, Object> twoMap = parser(Paths.get(filepath2));
-
-        StringBuilder result = new StringBuilder();
-        TreeSet<String> keys = new TreeSet<>();
-        keys.addAll(oneMap.keySet());
-        keys.addAll(twoMap.keySet());
-
-        String[] forms;
-        String state;
-        if (format.equals("stylish")) {
-            result.append("{\n");
-        }
-        if (format.equals("json")) {
-            result.append("[\n");
-        }
-        for (String key: keys) {
-            String oneString = oneMap.get(key) == null ? "null" : oneMap.get(key).toString();
-            String twoString = twoMap.get(key) == null ? "null" : twoMap.get(key).toString();
-            if (!oneMap.containsKey(key)) {
-                state = "added";
-            } else if (!twoMap.containsKey(key)) {
-                state = "deleted";
-            } else {
-                if (!oneString.equals(twoString)) {
-                    state = "changed";
-                } else {
-                    state = "unchanged";
-                }
-            }
-            if (format.equals("plain")) {
-                if (!Utils.isComplexValue(oneMap.get(key))) {
-                    oneString = "[complex value]";
-                }
-                if (!Utils.isComplexValue(twoMap.get(key))) {
-                    twoString = "[complex value]";
-                }
-            }
-            if (format.equals("plain")) {
-                if (oneMap.get(key) instanceof String) {
-                    oneString = Utils.frame(oneString, "'");
-                }
-                if (twoMap.get(key) instanceof String) {
-                    twoString = Utils.frame(twoString, "'");
-                }
-            }
-            if (format.equals("json")) {
-                if (oneMap.get(key) instanceof String) {
-                    oneString = Utils.frame(oneString, "\"");
-                }
-                if (twoMap.get(key) instanceof String) {
-                    twoString = Utils.frame(twoString, "\"");
-                }
-            }
-            forms = formatter(format, state);
-            if (state.equals("added")) {
-                result.append(forms[INDEX_0]).append(key).append(forms[INDEX_1])
-                        .append(twoString).append(forms[INDEX_2]);
-            }
-            if (state.equals("deleted")) {
-                result.append(forms[INDEX_0]).append(key).append(forms[INDEX_1]);
-                if (format.equals("stylish") || format.equals("json")) {
-                    result.append(oneString).append(forms[INDEX_2]);
-                }
-            }
-            if (state.equals("changed")) {
-                result.append(forms[INDEX_0]).append(key).append(forms[INDEX_1])
-                        .append(oneString).append(forms[INDEX_2]);
-                result.append(forms[INDEX_3]);
-                if (format.equals("stylish")) {
-                    result.append(key).append(forms[INDEX_4]);
-                }
-                result.append(twoString).append(forms[INDEX_5]);
-            }
-            if (state.equals("unchanged") && !format.equals("plain")) {
-                result.append(forms[INDEX_0]).append(key).append(forms[INDEX_1]).append(oneString);
-                if (format.equals("json")) {
-                    result.append(", ").append(twoString);
-                }
-                result.append(forms[INDEX_2]);
-            }
-        }
-        if (format.equals("stylish")) {
-            result.append("}");
-        }
-        if (format.equals("json")) {
-            result.deleteCharAt(result.lastIndexOf(","));
-            result.append("]");
-        }
-        if (format.equals("plain")) {
-            result.deleteCharAt(result.lastIndexOf("\n"));
-        }
-        return result.toString();
+        Map<String, Map<String, Object>> construchionDiff = getInterConstruchion(oneMap, twoMap);
+        return formatter(construchionDiff, format);
     }
 }
