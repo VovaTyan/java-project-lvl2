@@ -5,7 +5,7 @@ import hexlet.code.Utils;
 import java.util.Map;
 
 public class Json {
-    public static String json(Map<String, Map<String, Object>> construchionDiff) {
+    public static String format(Map<String, Map<String, Object>> construchionDiff) {
         StringBuilder result = new StringBuilder();
         result.append("[\n");
         for (Map.Entry<String, Map<String, Object>> map: construchionDiff.entrySet()) {

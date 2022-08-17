@@ -5,7 +5,7 @@ import java.nio.file.Paths;
 import java.util.Map;
 
 import static hexlet.code.Formatter.formatter;
-import static hexlet.code.InterConstruchion.getInterConstruchion;
+import static hexlet.code.InnerConstruchion.getInterConstruchion;
 import static hexlet.code.Parser.parser;
 
 

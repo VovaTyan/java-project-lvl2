@@ -1,20 +1,20 @@
 package hexlet.code;
 
-import java.util.Map;
+import hexlet.code.formatters.Json;
+import hexlet.code.formatters.Plain;
+import hexlet.code.formatters.Stylish;
 
-import static hexlet.code.formatters.Json.json;
-import static hexlet.code.formatters.Plain.plain;
-import static hexlet.code.formatters.Stylish.stylish;
+import java.util.Map;
 
 public class Formatter {
     public static String formatter(Map<String, Map<String, Object>> construchionDiff, String format) {
         switch (format) {
             case "stylish":
-                return stylish(construchionDiff);
+                return Stylish.format(construchionDiff);
             case "plain":
-                return plain(construchionDiff);
+                return Plain.format(construchionDiff);
             case "json":
-                return json(construchionDiff);
+                return Json.format(construchionDiff);
             default:
                 throw new RuntimeException();
         }
