@@ -18,6 +18,13 @@ class DifferTest {
     private String pathFileYaml2 = "./src/test/resources/file2.yml";
     private String pathFileYaml3 = "./src/test/resources/file3.yml";
     private String pathFileYaml4 = "./src/test/resources/file4.yml";
+
+    private String expectedStylish = "./src/test/resources/expectedStylish.txt";
+    private String expectedPlain = "./src/test/resources/expectedPlain.txt";
+    private String expectedComplexValue = "./src/test/resources/expectedComplexValue.txt";
+    private String expectedComplexValuePlain = "./src/test/resources/expectedComplexValuePlain.txt";
+    private String expectedOutJson = "./src/test/resources/expectedOutJson.txt";
+
     @Test
     public void testFileJson() throws IOException {
         String fileJson1 = Files.readString(Path.of(pathFileJson1));
@@ -137,86 +144,49 @@ class DifferTest {
     }
     @Test
     public void testGenerateJson() throws IOException {
-        var actual3 = Differ.generate(pathFileJson1, pathFileJson2, "stylish");
-        var expected3 = "{\n  - follow: false\n    host: hexlet.io\n  - proxy: 123.234.53.22\n"
-                + "  - timeout: 50\n  + timeout: 20\n  + verbose: true\n}";
-        assertThat(actual3).isEqualTo(expected3);
+        var actual = Differ.generate(pathFileJson1, pathFileJson2, "stylish");
+        String fileExpected = Files.readString(Path.of(expectedStylish));
+        var expected = fileExpected;
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
     public void testGenerateYaml() throws IOException {
-        var actual3 = Differ.generate(pathFileYaml1, pathFileYaml2, "stylish");
-        var expected3 = "{\n  - follow: false\n    host: hexlet.io\n  - proxy: 123.234.53.22\n"
-                + "  - timeout: 50\n  + timeout: 20\n  + verbose: true\n}";
-        assertThat(actual3).isEqualTo(expected3);
+        var actual = Differ.generate(pathFileYaml1, pathFileYaml2, "stylish");
+        String fileExpected = Files.readString(Path.of(expectedStylish));
+        var expected = fileExpected;
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
     public void testGeneratePlain() throws IOException {
-        var actual1 = Differ.generate(pathFileJson1, pathFileJson2, "plain");
-        var expected1 = "Property 'follow' was removed\n"
-                + "Property 'proxy' was removed\n"
-                + "Property 'timeout' was updated. From 50 to 20\n"
-                + "Property 'verbose' was added with value: true";
-        assertThat(actual1).isEqualTo(expected1);
+        var actual = Differ.generate(pathFileJson1, pathFileJson2, "plain");
+        String fileExpected = Files.readString(Path.of(expectedPlain));
+        var expected = fileExpected;
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
     public void testGenerateStructureStylish() throws IOException {
-        var actual1 = Differ.generate(pathFileJson3, pathFileJson4, "stylish");
-        var expected1 = "{\n    chars1: [a, b, c]\n"
-                + "  - chars2: [d, e, f]\n"
-                + "  + chars2: false\n"
-                + "  - checked: false\n"
-                + "  + checked: true\n"
-                + "  - default: null\n"
-                + "  + default: [value1, value2]\n"
-                + "  - id: 45\n"
-                + "  + id: null\n"
-                + "  - key1: value1\n"
-                + "  + key2: value2\n"
-                + "    numbers1: [1, 2, 3, 4]\n"
-                + "  - numbers2: [2, 3, 4, 5]\n"
-                + "  + numbers2: [22, 33, 44, 55]\n"
-                + "  - numbers3: [3, 4, 5]\n"
-                + "  + numbers4: [4, 5, 6]\n"
-                + "  + obj1: {nestedKey=value, isNested=true}\n"
-                + "  - setting1: Some value\n"
-                + "  + setting1: Another value\n"
-                + "  - setting2: 200\n"
-                + "  + setting2: 300\n"
-                + "  - setting3: true\n"
-                + "  + setting3: none\n}";
-        assertThat(actual1).isEqualTo(expected1);
+        var actual = Differ.generate(pathFileJson3, pathFileJson4, "stylish");
+        String fileExpected = Files.readString(Path.of(expectedComplexValue));
+        var expected = fileExpected;
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
     public void testGenerateStructurePlain() throws IOException {
-        var actual1 = Differ.generate(pathFileJson3, pathFileJson4, "plain");
-        var expected1 = "Property 'chars2' was updated. From [complex value] to false\n"
-            + "Property 'checked' was updated. From false to true\n"
-            + "Property 'default' was updated. From null to [complex value]\n"
-            + "Property 'id' was updated. From 45 to null\n"
-            + "Property 'key1' was removed\n"
-            + "Property 'key2' was added with value: 'value2'\n"
-            + "Property 'numbers2' was updated. From [complex value] to [complex value]\n"
-            + "Property 'numbers3' was removed\n"
-            + "Property 'numbers4' was added with value: [complex value]\n"
-            + "Property 'obj1' was added with value: [complex value]\n"
-            + "Property 'setting1' was updated. From 'Some value' to 'Another value'\n"
-            + "Property 'setting2' was updated. From 200 to 300\n"
-            + "Property 'setting3' was updated. From true to 'none'";
-        assertThat(actual1).isEqualTo(expected1);
+        var actual = Differ.generate(pathFileJson3, pathFileJson4, "plain");
+        String fileExpected = Files.readString(Path.of(expectedComplexValuePlain));
+        var expected = fileExpected;
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
     public void testGenerateOutJson() throws IOException {
-        var actual1 = Differ.generate(pathFileJson1, pathFileJson2, "json");
-        var expected1 = "{\"follow\":{\"changeType\":\"deleted\",\"value1\":false,\"value2\":\"null\"},"
-                + "\"host\":{\"changeType\":\"unchanged\",\"value1\":\"hexlet.io\",\"value2\":\"hexlet.io\"},"
-                + "\"proxy\":{\"changeType\":\"deleted\",\"value1\":\"123.234.53.22\",\"value2\":\"null\"},"
-                + "\"timeout\":{\"changeType\":\"changed\",\"value1\":50,\"value2\":20},"
-                + "\"verbose\":{\"changeType\":\"added\",\"value1\":\"null\",\"value2\":true}}";
-        assertThat(actual1).isEqualTo(expected1);
+        var actual = Differ.generate(pathFileJson1, pathFileJson2, "json");
+        String fileExpected = Files.readString(Path.of(expectedOutJson));
+        var expected = fileExpected;
+        assertThat(actual).isEqualTo(expected);
     }
 }
