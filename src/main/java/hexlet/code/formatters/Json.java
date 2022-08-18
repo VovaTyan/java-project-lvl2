@@ -1,12 +1,13 @@
 package hexlet.code.formatters;
 
-import hexlet.code.Utils;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Map;
 
 public class Json {
-    public static String format(Map<String, Map<String, Object>> construchionDiff) {
-        StringBuilder result = new StringBuilder();
+    public static String format(Map<String, Map<String, Object>> construchionDiff) throws JsonProcessingException {
+        /*StringBuilder result = new StringBuilder();
         result.append("[\n");
         for (Map.Entry<String, Map<String, Object>> map: construchionDiff.entrySet()) {
             String oneString = construchionDiff.get(map.getKey()).get("value1") == null ? "null"
@@ -42,5 +43,11 @@ public class Json {
         result.deleteCharAt(result.lastIndexOf(","));
         result.append("]");
         return result.toString();
+
+         */
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String result = objectMapper.writeValueAsString((Object) construchionDiff);
+        return result;
     }
 }
