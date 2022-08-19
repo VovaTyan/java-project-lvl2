@@ -6,7 +6,7 @@ import java.util.TreeSet;
 
 public class InnerConstruchion {
     public static Map<String, Map<String, Object>>
-        getInterConstruchion(Map<String, Object> oneMap, Map<String, Object> twoMap) {
+        getInnerConstruchion(Map<String, Object> oneMap, Map<String, Object> twoMap) {
         Map<String, Map<String, Object>> result = new TreeMap<>();
 
         TreeSet<String> keys;

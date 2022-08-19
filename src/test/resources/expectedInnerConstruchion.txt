@@ -1,0 +1,1 @@
+{follow={changeType=deleted, value1=false, value2=null}, host={changeType=unchanged, value1=hexlet.io, value2=hexlet.io}, proxy={changeType=deleted, value1=123.234.53.22, value2=null}, timeout={changeType=changed, value1=50, value2=20}, verbose={changeType=added, value1=null, value2=true}}

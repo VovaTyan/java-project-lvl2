@@ -5,7 +5,11 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Map;
 
+import static hexlet.code.InnerConstruchion.getInnerConstruchion;
+import static hexlet.code.Parser.parser;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class DifferTest {
@@ -24,123 +28,27 @@ class DifferTest {
     private String expectedComplexValue = "./src/test/resources/expectedComplexValue.txt";
     private String expectedComplexValuePlain = "./src/test/resources/expectedComplexValuePlain.txt";
     private String expectedOutJson = "./src/test/resources/expectedOutJson.txt";
+    private String expectedInnerConstruchion = "./src/test/resources/expectedInnerConstruchion.txt";
 
     @Test
-    public void testFileJson() throws IOException {
-        String fileJson1 = Files.readString(Path.of(pathFileJson1));
-        var actual1 = fileJson1;
-        var expected1 = "{\n"
-                + "  \"host\": \"hexlet.io\",\n"
-                + "  \"timeout\": 50,\n"
-                + "  \"proxy\": \"123.234.53.22\",\n"
-                + "  \"follow\": false\n"
-                + "}";
-        assertThat(actual1).isEqualTo(expected1);
-
-        String fileJson2 = Files.readString(Path.of(pathFileJson2));
-        var actual2 = fileJson2;
-        var expected2 = "{\n"
-                + "  \"timeout\": 20,\n"
-                + "  \"verbose\": true,\n"
-                + "  \"host\": \"hexlet.io\"\n"
-                + "}";
-        assertThat(actual2).isEqualTo(expected2);
-
-        String fileJson3 = Files.readString(Path.of(pathFileJson3));
-        var actual3 = fileJson3;
-        var expected3 = "{\n"
-                + "  \"setting1\": \"Some value\",\n"
-                + "  \"setting2\": 200,\n"
-                + "  \"setting3\": true,\n"
-                + "  \"key1\": \"value1\",\n"
-                + "  \"numbers1\": [1, 2, 3, 4],\n"
-                + "  \"numbers2\": [2, 3, 4, 5],\n"
-                + "  \"id\": 45,\n"
-                + "  \"default\": null,\n"
-                + "  \"checked\": false,\n"
-                + "  \"numbers3\": [3, 4, 5],\n"
-                + "  \"chars1\": [\"a\", \"b\", \"c\"],\n"
-                + "  \"chars2\": [\"d\", \"e\", \"f\"]\n"
-                + "}";
-        assertThat(actual3).isEqualTo(expected3);
-
-        String fileJson4 = Files.readString(Path.of(pathFileJson4));
-        var actual4 = fileJson4;
-        var expected4 = "{\n"
-                + "  \"setting1\": \"Another value\",\n"
-                + "  \"setting2\": 300,\n"
-                + "  \"setting3\": \"none\",\n"
-                + "  \"key2\": \"value2\",\n"
-                + "  \"numbers1\": [1, 2, 3, 4],\n"
-                + "  \"numbers2\": [22, 33, 44, 55],\n"
-                + "  \"id\": null,\n"
-                + "  \"default\": [\"value1\", \"value2\"],\n"
-                + "  \"checked\": true,\n"
-                + "  \"numbers4\": [4, 5, 6],\n"
-                + "  \"chars1\": [\"a\", \"b\", \"c\"],\n"
-                + "  \"chars2\": false,\n"
-                + "  \"obj1\": {\n"
-                + "    \"nestedKey\": \"value\",\n"
-                + "    \"isNested\": true\n"
-                + "  }\n"
-                + "}";
-        assertThat(actual4).isEqualTo(expected4);
+    public void testGetInnerConstruchionJson() throws IOException {
+        Map<String, Object> oneMap = parser(Paths.get(pathFileJson1));
+        Map<String, Object> twoMap = parser(Paths.get(pathFileJson2));
+        String construchionDiff = getInnerConstruchion(oneMap, twoMap).toString();
+        var actual = construchionDiff;
+        String fileExpected = Files.readString(Path.of(expectedInnerConstruchion));
+        var expected = fileExpected;
+        assertThat(actual).isEqualTo(expected);
     }
     @Test
-    public void testFileYaml() throws IOException {
-        String fileYaml1 = Files.readString(Path.of(pathFileYaml1));
-        var actual1 = fileYaml1;
-        var expected1 = "---\n"
-                + "host: hexlet.io\n"
-                + "timeout: 50\n"
-                + "proxy: 123.234.53.22\n"
-                + "follow: false";
-        assertThat(actual1).isEqualTo(expected1);
-
-        String fileYaml2 = Files.readString(Path.of(pathFileYaml2));
-        var actual2 = fileYaml2;
-        var expected2 = "---\n"
-                + "timeout: 20\n"
-                + "verbose: true\n"
-                + "host: hexlet.io";
-        assertThat(actual2).isEqualTo(expected2);
-
-        String fileYaml3 = Files.readString(Path.of(pathFileYaml3));
-        var actual3 = fileYaml3;
-        var expected3 = "---\n"
-                + "setting1: Some value\n"
-                + "setting2: 200\n"
-                + "setting3: true\n"
-                + "key1: value1\n"
-                + "numbers1:\n  - 1\n  - 2\n  - 3\n  - 4\n"
-                + "numbers2:\n  - 2\n  - 3\n  - 4\n  - 5\n"
-                + "id: 45\n"
-                + "default:\n"
-                + "checked: false\n"
-                + "numbers3:\n  - 3\n  - 4\n  - 5\n"
-                + "chars1:\n  - a\n  - b\n  - c\n"
-                + "chars2:\n  - d\n  - e\n  - f";
-        assertThat(actual3).isEqualTo(expected3);
-
-        String fileYaml4 = Files.readString(Path.of(pathFileYaml4));
-        var actual4 = fileYaml4;
-        var expected4 = "---\n"
-                + "setting1: Another value\n"
-                + "setting2: 300\n"
-                + "setting3: none\n"
-                + "key2: value2\n"
-                + "numbers1:\n  - 1\n  - 2\n  - 3\n  - 4\n"
-                + "numbers2:\n  - 22\n  - 33\n  - 44\n  - 55\n"
-                + "id:\n"
-                + "default:\n  - value1\n  - value2\n"
-                + "checked: true\n"
-                + "numbers4:\n  - 4\n  - 5\n  - 6\n"
-                + "chars1:\n  - a\n  - b\n  - c\n"
-                + "chars2: false\n"
-                + "obj1:\n"
-                + "  nestedKey: value\n"
-                + "  isNested: true";
-        assertThat(actual4).isEqualTo(expected4);
+    public void testGetInnerConstruchionYaml() throws IOException {
+        Map<String, Object> oneMap = parser(Paths.get(pathFileYaml1));
+        Map<String, Object> twoMap = parser(Paths.get(pathFileYaml2));
+        String construchionDiff = getInnerConstruchion(oneMap, twoMap).toString();
+        var actual = construchionDiff;
+        String fileExpected = Files.readString(Path.of(expectedInnerConstruchion));
+        var expected = fileExpected;
+        assertThat(actual).isEqualTo(expected);
     }
     @Test
     public void testGenerateJson() throws IOException {
