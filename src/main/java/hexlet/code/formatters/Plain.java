@@ -9,10 +9,8 @@ public class Plain {
         StringBuilder result = new StringBuilder();
 
         for (Map.Entry<String, Map<String, Object>> map: construchionDiff.entrySet()) {
-            String oneString = construchionDiff.get(map.getKey()).get("value1") == null ? "null"
-                    : construchionDiff.get(map.getKey()).get("value1").toString();
-            String twoString = construchionDiff.get(map.getKey()).get("value2") == null ? "null"
-                    : construchionDiff.get(map.getKey()).get("value2").toString();
+            String oneString = Utils.toString(construchionDiff.get(map.getKey()), "value1");
+            String twoString = Utils.toString(construchionDiff.get(map.getKey()), "value2");
             if (!Utils.isComplexValue(construchionDiff.get(map.getKey()).get("value1"))) {
                 oneString = "[complex value]";
             }
